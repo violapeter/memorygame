@@ -176,7 +176,7 @@ function checkState() {
 function isPair() {
   const [a, b] = AppState.turned.slice(-2)
   return AppState.board[a] === AppState.board[b]
-}bo
+}
 
 /** @param {number} cardId */
 function turnCard(cardId) {
