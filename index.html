@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Memory Game</title>
+  <meta name="apple-mobile-web-app-status-bar" content="#aa7700">
+  <meta name="theme-color" content="black">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="./icon-512x512.png" sizes="512x512" />
+</head>
+<body class="layout">
+  <header class="header">
+    <button class="replay js-replay">
+      <svg class="replay-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" height="20" width="20"><path d="M10 18.812Q8.375 18.812 6.938 18.188Q5.5 17.562 4.417 16.479Q3.333 15.396 2.708 13.958Q2.083 12.521 2.083 10.896H4.375Q4.375 13.25 6.021 14.885Q7.667 16.521 10 16.521Q12.333 16.521 13.969 14.875Q15.604 13.229 15.604 10.896Q15.604 8.562 13.969 6.938Q12.333 5.312 9.979 5.312H9.896L11.083 6.5L9.708 7.875L5.979 4.167L9.708 0.438L11.083 1.833L9.896 3.021H9.979Q11.625 3.021 13.062 3.625Q14.5 4.229 15.583 5.313Q16.667 6.396 17.292 7.833Q17.917 9.271 17.917 10.896Q17.917 12.521 17.292 13.958Q16.667 15.396 15.583 16.479Q14.5 17.562 13.062 18.188Q11.625 18.812 10 18.812Z"/></svg>
+      Új játék
+    </button>
+    <div class="header-item time">
+      <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" height="20" width="20"><path d="M7.125 2.583V0.458H12.875V2.583ZM8.958 11.917H11.042V6.979H8.958ZM10 19.042Q8.354 19.042 6.927 18.427Q5.5 17.812 4.427 16.74Q3.354 15.667 2.729 14.229Q2.104 12.792 2.104 11.167Q2.104 9.521 2.729 8.094Q3.354 6.667 4.427 5.594Q5.5 4.521 6.927 3.896Q8.354 3.271 10 3.271Q11.292 3.271 12.521 3.677Q13.75 4.083 14.771 4.875L16.104 3.542L17.625 5.062L16.271 6.417Q17.083 7.5 17.49 8.688Q17.896 9.875 17.896 11.167Q17.896 12.792 17.271 14.229Q16.646 15.667 15.573 16.74Q14.5 17.812 13.073 18.427Q11.646 19.042 10 19.042ZM10 16.75Q12.354 16.75 13.979 15.135Q15.604 13.521 15.604 11.167Q15.604 8.812 13.979 7.188Q12.354 5.562 10 5.562Q7.646 5.562 6.021 7.188Q4.396 8.812 4.396 11.167Q4.396 13.521 6.021 15.135Q7.646 16.75 10 16.75ZM10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Q10 11.167 10 11.167Z"/></svg>
+      <span class="js-time">0:00</span>
+    </div>
+    <div class="header-item steps js-steps">0 lépés</div>
+  </header>
+  <div class="board-wrapper">
+    <div class="board js-board"></div>
+  </div>
+  <div class="win js-win-dialog">
+    <div class="box">
+      <div class="trophy">🏆</div>
+      <h2>Győzelem!</h2>
+      <p>Gratulálok! Szeretnél még egyet játszatni?</p>
+      <button class="js-yes">Igen</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

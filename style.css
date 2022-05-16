@@ -1,0 +1,263 @@
+:root {
+  --font-family: 'Montserrat', sans-serif;
+  --primary-color: deeppink;
+  --grid: 8;
+}
+
+body {
+  font-family: var(--font-family);
+  background:
+    linear-gradient(115.58deg, #00FC19 0%, #1700A4 100.22%),
+    radial-gradient(92.72% 100% at 50% 0%, #EBFFCB 0%, #651200 100%),
+    radial-gradient(92.72% 100% at 50% 0%, #FAFF00 0%, #820000 100%),
+    radial-gradient(109.21% 213.32% at 100% 0%, #FF4D00 0%, #00C2FF 100%),
+    linear-gradient(127.43deg, #D50000 0%, #7856FF 100%) no-repeat;
+  background-blend-mode: lighten, overlay, lighten, screen, normal;
+  height: 100vh;
+  margin: 0 32px;
+}
+
+h1, h2 {
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.header {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+  display: flex;
+  align-items: center;
+  max-width: 960px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 32px 0;
+}
+
+.header .time {
+  display: flex;
+  align-items: center;
+  width: 80px;
+}
+
+.header .steps {
+  width: 80px;
+}
+
+.header .time .icon {
+  fill: #999;
+  margin: 0 8px;
+}
+
+.header-item {
+  font-weight: 500;
+  color: #666;
+  margin: 0 16px;
+}
+
+.replay {
+  color: #666;
+  background: none;
+  font-family: var(--font-family);
+  border: 0;
+  padding: 8px 16px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 auto 0 0;
+}
+
+.replay:hover {
+  color: var(--primary-color);
+  background: rgba(255, 20, 147, 0.1);
+}
+
+.replay:active {
+  color: #b40c67;
+}
+
+.replay:hover .replay-icon,
+.replay:focus .replay-icon {
+  fill: var(--primary-color);
+}
+
+.replay-icon {
+  color: #999;
+  opacity: .6;
+  margin: 0 8px 0 0;
+}
+
+.board-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 32px;
+}
+
+.board {
+  flex: 1 ;
+  display: grid;
+  grid-gap: 1vh;
+  aspect-ratio: 1 / 1;
+  max-width: 960px;
+  max-height: 960px;
+  height: 60%;
+  grid-template-columns: repeat(var(--grid), 1fr);
+  grid-template-rows: repeat(var(--grid), 1fr);
+  background: white;
+  padding: 1vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+}
+
+.card {
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  font-size: 64px;
+  min-width: 20px;
+  min-height: 20px;
+  transition: box-shadow .2s ease;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card:focus {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s;
+  transform-style: preserve-3d;
+}
+
+.card.turned .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: white;
+  transform: rotateY(180deg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+}
+
+.card-back {
+  background-color: hsl(34, 53%, 82%);
+  background-image: repeating-linear-gradient(45deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
+  hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
+  hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
+  hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
+  hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
+  hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
+  ),
+  repeating-linear-gradient(135deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
+    hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
+    hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
+    hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
+    hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
+    hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
+  );
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+}
+
+.win {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  transition: opacity .3s ease, visibility .3s ease;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.win.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.win.open .box {
+  transform: scale(1) translateY(0);
+}
+
+.win .box {
+  border-radius: 20px;
+  padding: 30px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .34);
+  position: relative;
+  transform: scale(.5) translateY(20px);
+  transition: transform .3s cubic-bezier(0.25, 0.1, 0.3, 1.5);
+}
+
+.win .trophy {
+  position: absolute;
+  top: -48px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  font-size: 64px;
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  padding: 12px;
+  text-align: center;
+  background: rgba(223, 230, 234, 0.9);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .1);
+}
+
+.win button {
+  font-family: var(--font-family);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  margin: 20px auto 0;
+  background: none;
+  display: block;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.win h2 {
+  margin: 48px 0 0;
+}
+
+.win button:hover {
+  background: var(--primary-color);
+  color: white;
+}
