@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="A simple memory game written in JavaScript">
   <title>Memory Game</title>
   <meta name="apple-mobile-web-app-status-bar" content="#aa7700">
   <meta name="theme-color" content="black">
@@ -12,7 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="./icon-512x512.png" sizes="512x512" />
+  <link rel="icon" href="/icon-512x512.png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="/icon-192x192-apple.png">
 </head>
 <body class="layout">
   <header class="header">
@@ -38,5 +40,18 @@
     </div>
   </div>
   <script src="script.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      registerSW()
+    })
+
+    async function registerSW() {
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator.serviceWorker.register('sw.js')
+        } catch (e) {}
+      }
+    }
+  </script>
 </body>
 </html>

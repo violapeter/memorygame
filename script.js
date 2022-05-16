@@ -176,7 +176,7 @@ function checkState() {
 function isPair() {
   const [a, b] = AppState.turned.slice(-2)
   return AppState.board[a] === AppState.board[b]
-}
+}bo
 
 /** @param {number} cardId */
 function turnCard(cardId) {
@@ -230,7 +230,7 @@ function handleClickCard(cardId) {
  */
 function renderBoard(board) {
   return board.map((content, id) => `
-    <button class="card" data-id="${id}">
+    <button class="card" data-id="${id}" aria-label="Kártya megrdítása">
       <div class="card-inner">
         <div class="card-back" aria-hidden="true"></div>
         <div class="card-front" aria-hidden="true">${content}</div>
