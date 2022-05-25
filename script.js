@@ -61,6 +61,7 @@ const GameStatus = {
 /**
  * @typedef {{
  *   turned: number[],
+ *   found: number[],
  *   board?: string[],
  *   steps: number,
  *   status: GameStatus,
@@ -78,6 +79,7 @@ const GameStatus = {
 const AppState = {
   board: null,
   turned: [],
+  found: [],
   steps: 0,
   status: GameStatus.BeginGame,
   timerId: undefined,
@@ -160,22 +162,49 @@ function checkState() {
 
   if (isWin()) {
     AppState.status = GameStatus.Won
-    clearGame()
+    setTimeout(() => {
+      clearGame()
+    }, 300)
     return
   }
 
   if (isPair()) {
     AppState.status = GameStatus.InGame
+    pairFound()
     return
   }
 
   turnBackCards()
 }
 
+/**
+ * @param index
+ * @return {HTMLDivElement}
+ */
+function getCardElementByIndex(index) {
+  return document.querySelector(`.card[data-id="${index}"]`)
+}
+
+/** @return {number[]} */
+function getLastTurnedPair() {
+  return AppState.turned.slice(-2)
+}
+
 /** @returns {boolean} */
 function isPair() {
-  const [a, b] = AppState.turned.slice(-2)
+  const [a, b] = getLastTurnedPair()
   return AppState.board[a] === AppState.board[b]
+}
+
+function pairFound() {
+  AppState.found.push(...getLastTurnedPair())
+  getLastTurnedPair().forEach((index) => {
+    const el = getCardElementByIndex(index)
+    el.classList.add('found')
+    setTimeout(() => {
+      moveCardOutOfBoardWithTransition(el, 0.1)
+    }, 1000)
+  })
 }
 
 /** @param {number} cardId */
@@ -238,14 +267,35 @@ function renderBoard(board) {
     </button>`).join('')
 }
 
+/** @return {NodeListOf<Element>} */
+function getCards() {
+  return document.querySelectorAll('.card')
+}
+
+/**
+ * Callback of the iterateCards function.
+ * @see iterateCards
+ * @callback iteratorCallback
+ * @param {HTMLDivElement} card
+ * @param {number} index
+ */
+
+/**
+ * @param {iteratorCallback} callback
+ */
+function iterateCards(callback) {
+  getCards().forEach(callback)
+}
+
 /**
  * @param {AppState} state
  * @void
  */
 function renderUI(state) {
   document.querySelector('.board').innerHTML = renderBoard(state.board)
-  document.querySelectorAll('.card').forEach((card, index) => {
+  iterateCards((card, index) => {
     card.addEventListener('click', () => handleClickCard(index))
+    card.classList[state.found.includes(index) ? 'add' : 'remove']('already-found')
   })
   document.querySelectorAll('.js-yes, .js-replay').forEach((el) => {
     el.addEventListener('click', () => {
@@ -272,7 +322,7 @@ function convertMsToMinutesSeconds(milliseconds) {
 
 /** @param {AppState} state */
 function updateUI(state) {
-  document.querySelectorAll('.card').forEach((card, cardId) => {
+  iterateCards((card, cardId) => {
     card.classList[state.turned.includes(cardId) ? 'add' : 'remove']('turned')
   })
   document.querySelector('.win').classList[state.status === GameStatus.Won ? 'add' : 'remove']('open')
@@ -327,16 +377,19 @@ function startNewGame() {
   clearGame()
   AppState.board = generateBoard(AppState.difficulty)
   AppState.turned = []
+  AppState.found = []
   AppState.steps = 0
   AppState.status = GameStatus.BeginGame
   AppState.startTime = Date.now()
   renderUI(AppState)
+  dealCards()
 }
 
 /** @param {AppState} state */
 function restoreSavedGame(state) {
   AppState.board = state.board
   AppState.turned = state.turned
+  AppState.found = state.found
   AppState.steps = state.steps
   AppState.status = state.status
   AppState.startTime = state.startTime
@@ -347,6 +400,48 @@ function restoreSavedGame(state) {
     checkState()
   }
   renderUI(AppState)
+}
+
+/** @param {HTMLDivElement} card */
+function moveCardOutOfBoard(card) {
+  const BOX_SHADOW_CORRECTION = 12
+  const { x, y, width, height } = card.getBoundingClientRect()
+  card.style.setProperty(
+    'transform',
+    `translate(-${x + width + BOX_SHADOW_CORRECTION}px, -${y + height + BOX_SHADOW_CORRECTION}px)`
+  )
+}
+
+/**
+ * @param {HTMLDivElement} card
+ * @param {number} transitionDelay
+ */
+function moveCardOutOfBoardWithTransition(card, transitionDelay) {
+  const removeTransitionProperty = () => {
+    card.style.removeProperty('transition')
+    card.style.removeProperty('transition-delay')
+    card.removeEventListener('transitionend', removeTransitionProperty)
+  }
+
+  card.style.setProperty('transition', 'transform .2s ease')
+  card.style.setProperty('transition-delay', `${transitionDelay}s`)
+  card.addEventListener('transitionend', removeTransitionProperty)
+  moveCardOutOfBoard(card)
+}
+
+function moveCardsOutOfBoard() {
+  iterateCards(moveCardOutOfBoard)
+}
+
+function dealCards() {
+  moveCardsOutOfBoard()
+  setTimeout(() => {
+    iterateCards((card, index) => {
+      card.style.setProperty('transition', 'transform .2s ease')
+      card.style.setProperty('transition-delay', `${index * 0.02}s`)
+      card.style.removeProperty('transform')
+    })
+  }, 10)
 }
 
 /** Entry point */

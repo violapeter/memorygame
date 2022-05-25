@@ -151,13 +151,21 @@ h1, h2 {
   font-size: 64px;
   min-width: 20px;
   min-height: 20px;
-  transition: box-shadow .2s ease;
   perspective: 1000px;
   cursor: pointer;
 }
 
 .card:focus {
   box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+}
+
+.card.found {
+  transition: transform .2s ease;
+  transform: scale(1.2);
+}
+
+.card.already-found {
+  visibility: hidden;
 }
 
 .card-inner {
