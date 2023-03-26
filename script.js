@@ -162,9 +162,7 @@ function checkState() {
 
   if (isWin()) {
     AppState.status = GameStatus.Won
-    setTimeout(() => {
-      clearGame()
-    }, 300)
+    clearGame()
     return
   }
 
