@@ -24,6 +24,14 @@ h1, h2 {
   text-align: center;
 }
 
+.layout-wrapper {
+  height: 100vh;
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .layout {
   display: flex;
   flex-direction: column;
@@ -43,7 +51,7 @@ h1, h2 {
   margin: 4rem 0;
 }
 
-@media screen and (max-height: 600px) {
+@media screen and (max-height: 996px) {
   .header {
     border-radius: 0 0 8px 8px;
     margin: 0 0 16px;
@@ -108,20 +116,17 @@ h1, h2 {
 
 .board-wrapper {
   flex-direction: column;
-  flex: 1;
+  flex: 1 0 auto;
   min-height: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 0 0 32px;
+  position: relative;
+  align-items: center;
 }
 
 .board {
-  flex: 1 ;
   display: grid;
   grid-gap: min(1vh, 1vw);
-  height: 800px;
-  width: 800px;
   grid-template-columns: repeat(var(--grid), 1fr);
   grid-template-rows: repeat(var(--grid), 1fr);
   background: #ae7c73;
@@ -129,25 +134,21 @@ h1, h2 {
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, .3);
   box-sizing: border-box;
+  position: absolute;
+  width: 100%;
 }
 
-@media screen and (max-width: 980px),
-       screen and (max-height: 960px) {
-  .layout-wrapper {
-    width: 100%;
-    height: 100%;
-    min-height: 420px;
-    display: flex;
-    flex-direction: column;
-  }
-
+@media screen and (max-height: 996px) {
   .board {
-    flex: 0;
-    min-width: 0;
-    max-width: 100%;
-    max-height: 100%;
-    aspect-ratio: 1;
+    height: 100%;
     width: auto;
+  }
+}
+
+@media (aspect-ratio: 1/1), (aspect-ratio: 1/2), (orientation: portrait) {
+  .board {
+    height: auto;
+    width: 100%;
   }
 }
 
@@ -215,21 +216,61 @@ h1, h2 {
 
 .card-back {
   background-color: hsl(34, 53%, 82%);
-  background-image: repeating-linear-gradient(45deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-  hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-  hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-  hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-  hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-  hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
-  ),
-  repeating-linear-gradient(135deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-    hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-    hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-    hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-    hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-    hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
-  );
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent 2.5%,
+      hsla(197, 62%, 11%, 0.5) 2.5%,
+      hsla(197, 62%, 11%, 0.5) 5%,
+      hsla(5, 53%, 63%, 0) 5%,
+      hsla(5, 53%, 63%, 0) 17.5%,
+      hsla(5, 53%, 63%, 0.5) 17.5%,
+      hsla(5, 53%, 63%, 0.5) 20%,
+      hsla(197, 62%, 11%, 0.5) 20%,
+      hsla(197, 62%, 11%, 0.5) 25%,
+      hsla(197, 62%, 11%, 0) 25%,
+      hsla(197, 62%, 11%, 0) 30%,
+      hsla(5, 53%, 63%, 0.5) 30%,
+      hsla(5, 53%, 63%, 0.5) 35%,
+      hsla(35, 91%, 65%, 0.5) 35%,
+      hsla(35, 91%, 65%, 0.5) 40%,
+      hsla(35, 91%, 65%, 0) 40%,
+      hsla(35, 91%, 65%, 0) 45%,
+      hsla(5, 53%, 63%, 0.5) 45%,
+      hsla(5, 53%, 63%, 0.5) 55%,
+      hsla(5, 53%, 63%, 0) 55%,
+      hsla(5, 53%, 63%, 0) 60%,
+      hsla(197, 62%, 11%, 0.5) 60%,
+      hsla(197, 62%, 11%, 0.5) 70%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      transparent 2.5%,
+      hsla(197, 62%, 11%, 0.5) 2.5%,
+      hsla(197, 62%, 11%, 0.5) 5%,
+      hsla(5, 53%, 63%, 0) 5%,
+      hsla(5, 53%, 63%, 0) 17.5%,
+      hsla(5, 53%, 63%, 0.5) 17.5%,
+      hsla(5, 53%, 63%, 0.5) 20%,
+      hsla(197, 62%, 11%, 0.5) 20%,
+      hsla(197, 62%, 11%, 0.5) 25%,
+      hsla(197, 62%, 11%, 0) 25%,
+      hsla(197, 62%, 11%, 0) 30%,
+      hsla(5, 53%, 63%, 0.5) 30%,
+      hsla(5, 53%, 63%, 0.5) 35%,
+      hsla(35, 91%, 65%, 0.5) 35%,
+      hsla(35, 91%, 65%, 0.5) 40%,
+      hsla(35, 91%, 65%, 0) 40%,
+      hsla(35, 91%, 65%, 0) 45%,
+      hsla(5, 53%, 63%, 0.5) 45%,
+      hsla(5, 53%, 63%, 0.5) 55%,
+      hsla(5, 53%, 63%, 0) 55%,
+      hsla(5, 53%, 63%, 0) 70%,
+      hsla(197, 62%, 11%, 0.5) 70%,
+      hsla(197, 62%, 11%, 0.5) 80%
+    );
   box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+  background-size: cover;
 }
 
 .win {
