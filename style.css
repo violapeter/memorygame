@@ -14,9 +14,15 @@ body {
     radial-gradient(109.21% 213.32% at 100% 0%, #FF4D00 0%, #00C2FF 100%),
     linear-gradient(127.43deg, #D50000 0%, #7856FF 100%) no-repeat;
   background-blend-mode: lighten, overlay, lighten, screen, normal;
-  height: 100vh;
+  height: 100dvh;
   font-size: 16px;
   margin: 0 32px;
+}
+
+@media (width < 460px) {
+  body {
+    margin: 0;
+  }
 }
 
 h1, h2 {
@@ -55,6 +61,13 @@ h1, h2 {
   .header {
     border-radius: 0 0 8px 8px;
     margin: 0 0 16px;
+  }
+}
+
+@media (width < 460px) {
+  .header {
+    border-radius: 0;
+    padding: 10px;
   }
 }
 
@@ -152,6 +165,13 @@ h1, h2 {
   }
 }
 
+@media (width < 460px) {
+  .board {
+    padding: 0.5vh;
+    border-radius: 0;
+  }
+}
+
 .card {
   border: 0;
   background: none;
@@ -168,6 +188,14 @@ h1, h2 {
 @media screen and (max-height: 600px) {
   .card {
     font-size: 48px;
+  }
+}
+
+
+@media screen and (max-height: 460px) {
+  .card {
+    container-type: inline-size;
+    font-size: clamp(1rem, 1vh, 1rem);
   }
 }
 
