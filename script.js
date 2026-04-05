@@ -56,7 +56,17 @@ const GameStatus = {
   BeginGame: 'BEGIN_GAME',
   InGame: 'IN_GAME',
   BetweenSteps: 'BETWEEN_STEPS',
+  TopScore: 'TOP_SCORE',
+  ScoreBoard: 'SCORE_BOARD',
 }
+
+/**
+ * @typedef {{
+ *   name: string
+ *   steps: number
+ *   time: number
+ * }} ScoreBoardEntry
+ */
 
 /**
  * @typedef {{
@@ -68,6 +78,7 @@ const GameStatus = {
  *   timerId?: number,
  *   startTime?: number,
  *   difficulty: GameDifficulty,
+ *   scoreBoard?: ScoreBoardEntry[]
  * }} AppState
  */
 
@@ -85,6 +96,7 @@ const AppState = {
   timerId: undefined,
   startTime: 0,
   difficulty: GameDifficulty.Intermediate,
+  scoreBoard: [],
 }
 
 /**
@@ -162,6 +174,10 @@ function checkState() {
 
   if (isWin()) {
     AppState.status = GameStatus.Won
+    if (isGameInTopTen(AppState)) {
+
+    }
+
     clearGame()
     return
   }
@@ -257,7 +273,7 @@ function handleClickCard(cardId) {
  */
 function renderBoard(board) {
   return board.map((content, id) => `
-    <button class="card" data-id="${id}" aria-label="Kártya megrdítása">
+    <button class="card" data-id="${id}" aria-label="Kártya megfordítása">
       <div class="card-inner">
         <div class="card-back" aria-hidden="true"></div>
         <div class="card-front" aria-hidden="true">${content}</div>
@@ -325,13 +341,66 @@ function updateUI(state) {
   })
   document.querySelector('.win').classList[state.status === GameStatus.Won ? 'add' : 'remove']('open')
   document.querySelector('.js-time').innerHTML = convertMsToMinutesSeconds(
-    Date.now() - state.startTime
+    getElapsedTime(state.startTime)
   )
   document.querySelector('.js-steps').innerHTML = `${AppState.steps} lépés`
 
   if (shouldSave()) {
     saveToLocalStorage(state)
   }
+}
+
+/**
+ * @param {number} startTime
+ * @returns {number}
+ */
+function getElapsedTime(startTime) {
+  return Date.now() - startTime
+}
+
+/**
+ * @param {number} startTime
+ * @returns {number}
+ */
+function getElapsedTimeInSeconds(startTime) {
+  return getElapsedTime(startTime) / 1000
+}
+
+/**
+ * @param {number} timeInSeconds
+ * @param {number} steps
+ * @returns {number}
+ */
+function getScore(timeInSeconds, steps) {
+  const TIME_WEIGHT = 0.7
+  const STEPS_WEIGHT = 0.3
+  const timeScore = 1 / (timeInSeconds || 1)
+  const stepsScore = 1 / (steps || 1)
+
+  const score = (timeScore * TIME_WEIGHT + stepsScore * STEPS_WEIGHT) * 1000
+  return Math.round(score)
+}
+
+/**
+ * @param {AppState} state
+ * @returns {boolean}
+ */
+function isGameInTopTen(state) {
+  if (state.scoreBoard.length < 10) {
+    return true
+  }
+
+  const score = getScore(getElapsedTimeInSeconds(state.startTime), state.steps)
+
+  return state.scoreBoard.find(({ time, steps}) => {
+    const currentScore = getScore(time / 10000, steps)
+    return score > currentScore
+  }) !== undefined
+}
+
+/** @param {AppState} state */
+function saveGameResults(state) {
+
 }
 
 /**

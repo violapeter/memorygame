@@ -1,3 +1,9 @@
+html {
+  height: 100%;
+  max-height: 100svh;
+  overflow: hidden;
+}
+
 :root {
   --font-family: 'Montserrat', sans-serif;
   --primary-color: deeppink;
@@ -14,9 +20,17 @@ body {
     radial-gradient(109.21% 213.32% at 100% 0%, #FF4D00 0%, #00C2FF 100%),
     linear-gradient(127.43deg, #D50000 0%, #7856FF 100%) no-repeat;
   background-blend-mode: lighten, overlay, lighten, screen, normal;
-  height: 100dvh;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
   font-size: 16px;
-  margin: 0 32px;
+  padding: 0 32px;
+}
+
+* {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 @media (width < 460px) {
@@ -31,7 +45,7 @@ h1, h2 {
 }
 
 .layout-wrapper {
-  height: 100vh;
+  height: 100%;
   max-width: 800px;
   width: 100%;
   display: flex;
@@ -159,7 +173,12 @@ h1, h2 {
 }
 
 @media (aspect-ratio: 1/1), (aspect-ratio: 1/2), (orientation: portrait) {
+  .board-wrapper {
+    justify-content: center;
+  }
+
   .board {
+    position: relative;
     height: auto;
     width: 100%;
   }
